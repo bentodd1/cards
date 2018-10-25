@@ -4,20 +4,35 @@ cards.init({table:'#card-table'});
 
 //Create a new deck of cards
 deck = new cards.Deck(); 
+deck2 = new cards.Deck(); 
+console.log(deck);
+ console.log(deck2);
 //By default it's in the middle of the container, put it slightly to the side
-deck.x -= 50;
+deck.x -= 75;
+deck.y -= 100;
+deck2.x -= 150;
 
+var half_length = Math.ceil(cards.all.length / 2);    
+
+var leftSide = cards.all.splice(0,half_length);
+console.log(cards.all);
 //cards.all contains all cards, put them all in the deck
 deck.addCards(cards.all); 
+
+deck2.addCards(leftSide);
+
 //No animation here, just get the deck onto the table.
 deck.render({immediate:true});
+
+deck2.render({immediate:true});
+
 
 //Now lets create a couple of hands, one face down, one face up.
 upperhand = new cards.Hand({faceUp:false, y:60});
 lowerhand = new cards.Hand({faceUp:true, y:340});
 
 //Lets add a discard pile
-discardPile = new cards.Deck({faceUp:true});
+discardPile = new cards.Deck({faceUp:false});
 discardPile.x += 50;
 
 
