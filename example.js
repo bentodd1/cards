@@ -13,9 +13,13 @@ deck.y -= 100;
 deck2.x -= 150;
 
 var half_length = Math.ceil(cards.all.length / 2);    
-
+console.log(half_length);
 var leftSide = cards.all.splice(0,half_length);
-console.log(cards.all);
+console.log(leftSide);
+console.log('First half ');
+console.log(cards.all.length);
+console.log('Second half ');
+console.log(leftSide.length);
 //cards.all contains all cards, put them all in the deck
 deck.addCards(cards.all); 
 
