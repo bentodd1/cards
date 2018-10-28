@@ -6,7 +6,7 @@ var cards = (function() {
 		animationSpeed : 500,
 		table : 'body',
 		cardback : 'red',
-		acesHigh : false,
+		acesHigh : true,
 		cardsUrl : 'img/cards.png',
 		blackJoker : false,
 		redJoker : false
@@ -148,9 +148,14 @@ var cards = (function() {
 		},
 		
 		addCards : function(cards) {
-			for (var i = 0; i < cards.length;i++) {
+			var firstLength = cards.length;
+			console.log(cards.length);
+			for (var i = 0; i < firstLength;i++) {
+				console.log('In Here');
+				console.log(cards.length);
 				var card = cards[i];
 				if (card.container) {
+					console.log("Removing card");
 					card.container.removeCard(card);
 				}
 				this.push(card);
