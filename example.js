@@ -52,11 +52,16 @@ function takeDiscardPile (player, discardPile) {
     };
 
 
-function putCardsInDiscardPile(discardPile, hand){
+function putCardsInDiscardPile(tempDiscardPile, hand){
 	for(card in hand){
-		discardPile.push(card);
-		hand.removeCard(card);
-	}
+		  console.log('In loop');
+		 tempDiscardPile.addCard(card);
+		 tempDiscardPile.addCard(card);
+		}
+		 discardPile.render();
+		 hand.render();
+		 
+	
 
 }
 
@@ -80,16 +85,26 @@ addAsync(10).then((sum) => {
 
 async function moveToDiscardPile(card1,card2) {
 		sleep(3000).then(() =>  {
+
+		let lowerhandLength = lowerhand.length;
+		let uperhandLength = upperhand.length;
 		//let handResult =  await getHandResult(card1, card2);
 		if(card1.rank> card2.rank)
 		{
 		 console.log('Card 1 is larger');
 		 console.log(lowerhand);
 		 console.log(upperhand);
-		 //putCardsInDiscardPile(discardPile2,lowerhand );
-		 //putCardsInDiscardPile(discardPile2, upperhand);
-		 discardPile.addCards(lowerhand);
-		 discardPile.addCards(upperhand);
+		 //putCardsInDiscardPile(discardPile1,lowerhand );
+		 //putCardsInDiscardPile(discardPile1, upperhand);
+
+		  while(lowerhand.length != 0){
+		 	discardPile.addCards(lowerhand);
+		 	console.log(lowerhand.length);
+		 }
+		 while(upperhand.length != 0){
+		 	discardPile.addCards(upperhand);
+		 	console.log(upperhand.length);
+		 }
 
 		 discardPile.render();
 		 lowerhand.render();
@@ -101,10 +116,16 @@ async function moveToDiscardPile(card1,card2) {
 		 console.log('Card 2 is larger');
 		 console.log(lowerhand);
 		 console.log(upperhand);
-		 // putCardsInDiscardPile(discardPile2,lowerhand );
-		 // putCardsInDiscardPile(discardPile2, upperhand);
-		 discardPile2.addCards(lowerhand);
-		 discardPile2.addCards(upperhand);
+		 while(lowerhand.length != 0){
+		 	discardPile2.addCards(lowerhand);
+		 	console.log(lowerhand.length);
+		 }
+		 while(upperhand.length != 0){
+		 	discardPile2.addCards(upperhand);
+		 	console.log(upperhand.length);
+		 }
+		 //putCardsInDiscardPile(discardPile2,lowerhand );
+		 //putCardsInDiscardPile(discardPile2, upperhand);
 
 		 discardPile2.render();
 		 lowerhand.render();

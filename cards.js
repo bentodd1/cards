@@ -150,7 +150,7 @@ var cards = (function() {
 		addCards : function(cards) {
 			var firstLength = cards.length;
 			console.log(cards.length);
-			for (var i = 0; i < firstLength;i++) {
+			for (var i = 0; i < cards.length;i++) {
 				console.log('In Here');
 				console.log(cards.length);
 				var card = cards[i];
