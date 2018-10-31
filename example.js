@@ -3,20 +3,20 @@
 cards.init({table:'#card-table'});
 
 //Create a new deck of cards
-deck = new cards.Deck(); 
-deck2 = new cards.Deck(); 
+deck = new cards.Deck();
+deck2 = new cards.Deck();
 
 //By default it's in the middle of the container, put it slightly to the side
 deck.x += 50;
 
 deck2.x -= 50;
 
-var half_length = Math.ceil(cards.all.length / 2);    
+var half_length = Math.ceil(cards.all.length / 2);
 
 var leftSide = cards.all.splice(0,half_length);
 
 //cards.all contains all cards, put them all in the deck
-deck.addCards(cards.all); 
+deck.addCards(cards.all);
 
 deck2.addCards(leftSide);
 
@@ -60,8 +60,8 @@ function putCardsInDiscardPile(tempDiscardPile, hand){
 		}
 		 discardPile.render();
 		 hand.render();
-		 
-	
+
+
 
 }
 
@@ -117,7 +117,8 @@ async function moveToDiscardPile(card1,card2) {
 		 console.log(lowerhand);
 		 console.log(upperhand);
 		 while(lowerhand.length != 0){
-		 	discardPile2.addCards(lowerhand);
+			 discardPile2.addCards(lowerhand);
+			 window.alert("Your Card is higher!");
 		 	console.log(lowerhand.length);
 		 }
 		 while(upperhand.length != 0){
@@ -135,22 +136,36 @@ async function moveToDiscardPile(card1,card2) {
 			fightWar();
 		}
 
-		
+
   //do stuff
 })
-		
-	
+
+
 }
 
 async function flipCards()
 {
-  const a = await deck.deal(1, [upperhand], 50);
+  if(deck.length < 1)
+  {
+	  deck.addCards(discardPile2);
+	  deck.render();
+	  discardPile2.render();
+
+  }
+  if(deck2.length < 1) {
+
+	  deck2.addCards(discardPile);
+	  deck2.render();
+	  discardPile.render();
+  }
+
+const a = await deck.deal(1, [upperhand], 50);
 const b = await deck2.deal(1, [lowerhand], 50);
 console.log(lowerhand);
 console.log(upperhand);
 const c = await moveToDiscardPile(lowerhand[lowerhand.length-1],upperhand[upperhand.length-1]);
 
-	
+
 }
 
 
