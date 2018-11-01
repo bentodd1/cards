@@ -84,13 +84,15 @@ addAsync(10).then((sum) => {
 });
 
 async function moveToDiscardPile(card1,card2) {
-		sleep(3000).then(() =>  {
+		sleep(500).then(() =>  {
 
 		let lowerhandLength = lowerhand.length;
 		let uperhandLength = upperhand.length;
 		//let handResult =  await getHandResult(card1, card2);
 		if(card1.rank> card2.rank)
 		{
+
+		//window.alert("Your Card is higher!");
 		 console.log('Card 1 is larger');
 		 console.log(lowerhand);
 		 console.log(upperhand);
@@ -113,12 +115,12 @@ async function moveToDiscardPile(card1,card2) {
 		}
 		else if(card1.rank < card2.rank)
 		{
+		 //window.alert("Your  opponets Card is higher!");
 		 console.log('Card 2 is larger');
 		 console.log(lowerhand);
 		 console.log(upperhand);
 		 while(lowerhand.length != 0){
 			 discardPile2.addCards(lowerhand);
-			 window.alert("Your Card is higher!");
 		 	console.log(lowerhand.length);
 		 }
 		 while(upperhand.length != 0){
@@ -133,6 +135,7 @@ async function moveToDiscardPile(card1,card2) {
 		 upperhand.render();
 		}
 		else{
+			window.alert("Fighting War");
 			fightWar();
 		}
 
