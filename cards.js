@@ -2,7 +2,7 @@
 var cards = (function() {
 	//The global options
 	var opt = {
-		cardSize : {width:69,height:94, padding:18},
+		cardSize : {width:138,height:188, padding:18},
 		animationSpeed : 500,
 		table : 'body',
 		cardback : 'red',
@@ -13,7 +13,7 @@ var cards = (function() {
 	};
 	var zIndexCounter = 1;
 	var all = []; //All the cards created.
-	
+
 	function mouseEvent(ev) {
 		var card = $(this).data('card');
 		if (card.container) {
@@ -23,7 +23,7 @@ var cards = (function() {
 			}
 		}
 	}
-	
+
 	function init(options) {
 		if (options) {
 			for (var i in options) {
@@ -50,7 +50,7 @@ var cards = (function() {
 		if (opt.redJoker) {
 			all.push(new Card('rj', 0, opt.table));
 		}
-		
+
 		$('.card').click(mouseEvent);
 		shuffle(all);
 	}
@@ -67,11 +67,11 @@ var cards = (function() {
             deck[j] = tempi;
         }
     }
-	
+
 	function Card(suit, rank, table) {
 		this.init(suit, rank, table);
 	}
-	
+
 	Card.prototype = {
 		init: function (suit, rank, table) {
 			this.shortName = suit + rank;
@@ -84,7 +84,7 @@ var cards = (function() {
 				height:opt.cardSize.height,
 				"background-image":'url('+ opt.cardsUrl + ')',
 				position:'absolute',
-				cursor:'pointer'	
+				cursor:'pointer'
 			}).addClass('card').data('card', this).appendTo($(table));
 			this.showCard();
 			this.moveToFront();
@@ -98,7 +98,7 @@ var cards = (function() {
 			var props = {top:y-(opt.cardSize.height/2),left:x-(opt.cardSize.width/2)};
 			$(this.el).animate(props, speed || opt.animationSpeed, callback);
 		},
-		
+
 		rotate : function(angle) {
 			$(this.el)
 				.css('-webkit-transform', 'rotate(' + angle + 'deg)')
@@ -107,7 +107,7 @@ var cards = (function() {
 				.css('transform', 'rotate(' + angle + 'deg)')
 				.css('-o-transform', 'rotate(' + angle + 'deg)');
 		},
-		
+
 		showCard : function() {
 			var offsets = { "c": 0, "d": 1, "h": 2, "s": 3 };
 			var xpos, ypos;
@@ -126,16 +126,16 @@ var cards = (function() {
 			$(this.el).css('background-position', '0px ' + y + 'px');
 			this.rotate(0);
 		},
-		
+
 		moveToFront : function() {
 			$(this.el).css('z-index', zIndexCounter++);
-		}		
+		}
 	};
-	
+
 	function Container() {
-	
+
 	}
-	
+
 	Container.prototype = new Array();
 	Container.prototype.extend = function(obj) {
 		for (var prop in obj) {
@@ -146,7 +146,7 @@ var cards = (function() {
 		addCard : function(card) {
 			this.addCards([card]);
 		},
-		
+
 		addCards : function(cards) {
 			var firstLength = cards.length;
 			console.log(cards.length);
@@ -162,7 +162,7 @@ var cards = (function() {
 				card.container = this;
 			}
 		},
-		
+
 		removeCard : function(card) {
 			for (var i=0; i< this.length;i++) {
 				if (this[i] == card) {
@@ -187,11 +187,11 @@ var cards = (function() {
 		mousedown : function(func, context) {
 			this._mousedown = {func:func,context:context};
 		},
-		
+
 		mouseup : function(func, context) {
 			this._mouseup = {func:func,context:context};
 		},
-		
+
 		render : function(options) {
 			options = options || {};
 			var speed = options.speed || opt.animationSpeed;
@@ -226,25 +226,25 @@ var cards = (function() {
 			} else {
 				setTimeout(flip, speed /2);
 			}
-			
+
 			if (options.callback) {
 				setTimeout(options.callback, speed);
 			}
 		},
-		
+
 		topCard : function() {
 			return this[this.length-1];
 		},
-		
+
 		toString: function() {
 			return 'Container';
 		}
 	});
-	
+
 	function Deck(options) {
 		this.init(options);
 	}
-	
+
 	Deck.prototype = new Container();
 	Deck.prototype.extend({
 		calcPosition : function(options) {
@@ -261,11 +261,11 @@ var cards = (function() {
 				this[i].targetLeft = left;
 			}
 		},
-		
+
 		toString : function() {
 			return 'Deck';
 		},
-		
+
 		deal : function(count, hands, speed, callback) {
 			var me = this;
 			var i = 0;
@@ -300,33 +300,33 @@ var cards = (function() {
 				this[i].targetLeft = left+i*opt.cardSize.padding;
 			}
 		},
-		
+
 		toString : function() {
 			return 'Hand';
 		}
 	});
-	
+
 	function Pile(options) {
 		this.init(options);
 	}
-	
+
 	Pile.prototype = new Container();
 	Pile.prototype.extend({
 		calcPosition : function(options) {
 			options = options || {};
 		},
-		
+
 		toString : function() {
 			return 'Pile';
 		},
-		
+
 		deal : function(count, hands) {
 			if (!this.dealCounter) {
 				this.dealCounter = count * hands.length;
 			}
 		}
 	});
-	
+
 
 	return {
 		init : init,
