@@ -84,7 +84,7 @@ addAsync(10).then((sum) => {
 });
 
 async function moveToDiscardPile(card1,card2) {
-		sleep(500).then(() =>  {
+		sleep(1000).then(() =>  {
 
 		let lowerhandLength = lowerhand.length;
 		let uperhandLength = upperhand.length;
