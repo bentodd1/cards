@@ -6,6 +6,8 @@ cards.init({table:'#card-table'});
 deck = new cards.Deck();
 deck2 = new cards.Deck();
 
+var lock = false;
+
 //By default it's in the middle of the container, put it slightly to the side
 deck.x += 100;
 
@@ -111,6 +113,7 @@ async function moveToDiscardPile(card1,card2) {
 		 discardPile.render();
 		 lowerhand.render();
 		 upperhand.render();
+		 lock =false;
 
 		}
 		else if(card1.rank < card2.rank)
@@ -127,12 +130,14 @@ async function moveToDiscardPile(card1,card2) {
 		 	discardPile2.addCards(upperhand);
 		 	console.log(upperhand.length);
 		 }
+
 		 //putCardsInDiscardPile(discardPile2,lowerhand );
 		 //putCardsInDiscardPile(discardPile2, upperhand);
 
 		 discardPile2.render();
 		 lowerhand.render();
 		 upperhand.render();
+		 lock =false;
 		}
 		else{
 			window.alert("Fighting War");
@@ -187,8 +192,12 @@ function getHandResult(card1, card2) {
 
 //Let's deal when the Deal button is pressed:
 $('#flip').click(function() {
+	if(lock == false){
+	lock = true;	
+	//window.alert(lock);
 	//Deck has a built in method to deal to hands.
 	flipCards();
+	}
 });
 
 
