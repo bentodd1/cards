@@ -1,17 +1,19 @@
 
 //Tell the library which element to use for the table
 cards.init({table:'#card-table'});
-
+//2 is always opponent
 //Create a new deck of cards
 deck = new cards.Deck();
 deck2 = new cards.Deck();
+var yourDeckSize = 26;
+var opponentCards = 26;
 
 var lock = false;
 
 //By default it's in the middle of the container, put it slightly to the side
-deck.x += 100;
+deck2.x += 100;
 
-deck2.x -= 100;
+deck.x -= 100;
 
 var half_length = Math.ceil(cards.all.length / 2);
 
@@ -34,8 +36,8 @@ lowerhand = new cards.Hand({faceUp:true, y:340});
 //Lets add a discard pile
 discardPile2 = new cards.Deck({faceUp:false});
 discardPile = new cards.Deck({faceUp:false});
-discardPile.x -= 250;
-discardPile2.x +=250;
+discardPile2.x += 250;
+discardPile.x -=250;
 
 const sleep = (milliseconds) => {
   return new Promise(resolve => setTimeout(resolve, milliseconds))
@@ -43,29 +45,12 @@ const sleep = (milliseconds) => {
 
  const fightWar = async function () {
       for (let i = 0; i < 3; i++) {
-    	  const a =   deck.deal(1, [upperhand], 50);
-		  const b =  deck2.deal(1, [lowerhand], 50);
+    	  const a =  deck.deal(1, [lowerhand], 50);
+		  const b =  deck2.deal(1, [upperhand], 50);
       }
      flipCards();
     };
 
-function takeDiscardPile (player, discardPile) {
-      player.discardDeck.push.apply(player.discardDeck, discardPile)
-    };
-
-
-function putCardsInDiscardPile(tempDiscardPile, hand){
-	for(card in hand){
-		  console.log('In loop');
-		 tempDiscardPile.addCard(card);
-		 tempDiscardPile.addCard(card);
-		}
-		 discardPile.render();
-		 hand.render();
-
-
-
-}
 
 function doubleAfter2Seconds(x) {
   return new Promise(resolve => {
@@ -94,10 +79,11 @@ async function moveToDiscardPile(card1,card2) {
 		if(card1.rank> card2.rank)
 		{
 
+
 		//window.alert("Your Card is higher!");
 		 console.log('Card 1 is larger');
-		 console.log(lowerhand);
-		 console.log(upperhand);
+		 console.log("Card 1 larger ");
+		
 		 //putCardsInDiscardPile(discardPile1,lowerhand );
 		 //putCardsInDiscardPile(discardPile1, upperhand);
 
@@ -113,6 +99,15 @@ async function moveToDiscardPile(card1,card2) {
 		 discardPile.render();
 		 lowerhand.render();
 		 upperhand.render();
+		 opponentCards = deck2.length + discardPile2.length;
+		 yourDeckSize = deck.length + discardPile.length;
+		 console.log(opponentCards);
+		 console.log(yourDeckSize);
+		 $('#opponetsCards').html('Opponents deck size ' + opponentCards);
+		 $('#yourCards').html('Your deck size ' + yourDeckSize);
+
+
+
 		 lock =false;
 
 		}
@@ -130,7 +125,13 @@ async function moveToDiscardPile(card1,card2) {
 		 	discardPile2.addCards(upperhand);
 		 	console.log(upperhand.length);
 		 }
-
+		 	 discardPile2.render();
+		 lowerhand.render();
+		 upperhand.render();
+		 opponentCards = deck2.length + discardPile2.length;
+		 yourDeckSize = deck.length + discardPile.length;
+		 $('#opponetsCards').html('Opponents deck size ' + opponentCards);
+		 $('#yourCards').html('Your deck size ' + yourDeckSize);
 		 //putCardsInDiscardPile(discardPile2,lowerhand );
 		 //putCardsInDiscardPile(discardPile2, upperhand);
 
@@ -142,6 +143,14 @@ async function moveToDiscardPile(card1,card2) {
 		else{
 			window.alert("Fighting War");
 			fightWar();
+		}
+		if(discardPile2.length + deck2.length ==0)
+		{
+			window.alert("You win the game!!");
+		}
+		if(discardPile.length + deck.length ==0)
+		{
+			window.alert("Opponent wins the game.");
 		}
 
 
@@ -155,23 +164,25 @@ async function flipCards()
 {
   if(deck.length < 1)
   {
-	  deck.addCards(discardPile2);
+	  deck.addCards(discardPile);
 	  deck.render();
-	  discardPile2.render();
+	  discardPile.render();
 
   }
   if(deck2.length < 1) {
 
-	  deck2.addCards(discardPile);
+	  deck2.addCards(discardPile2);
 	  deck2.render();
-	  discardPile.render();
+	  discardPile2.render();
   }
 
-const a = await deck.deal(1, [upperhand], 50);
-const b = await deck2.deal(1, [lowerhand], 50);
+const a = await deck2.deal(1, [upperhand], 50);
+const b = await deck.deal(1, [lowerhand], 50);
 console.log(lowerhand);
 console.log(upperhand);
 const c = await moveToDiscardPile(lowerhand[lowerhand.length-1],upperhand[upperhand.length-1]);
+
+
 
 
 }
